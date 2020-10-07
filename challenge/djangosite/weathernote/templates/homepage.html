@@ -1,0 +1,403 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+
+<html>
+
+<html>
+<head>
+<title> Django Weather and Notes Webpage</title>
+{% load static %}
+<!--<link href="css/style.css" rel="stylesheet" type="text/css" media="all" /> -->
+<link href=" {%static 'css/stylen.css' %}" rel="stylesheet" type="text/css" media="all" />
+<!-- js -->
+<script type="text/javascript" src=" {%static 'js/jquery.min.js'%}"></script>
+<!-- //js --> 
+<link rel="stylesheet" type="text/css" href=" {%static 'css/easy-responsive-tabs.css' %} " />
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+ 
+<link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+</head>
+
+<body onload="startTime()">
+	<div class="main">	
+		<div class="w3_agile_main_grids">
+			<div class="w3layouts_main_grid">
+				<div class="w3layouts_main_grid_left">
+					<h2>{{city}}.</h2>
+					<p>{{today_weather.summary}}</p>
+					<!--<h3>Now</h3>-->
+					<h4>{{today_weather.temp}}<span>°c</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<canvas id="{{today_weather.ani}}" width="70" height="70"> </canvas></h4>
+				</div>
+				<div class="w3layouts_main_grid_right">
+		
+					<div id="w3time"></div>
+					<div class="w3layouts_date_year">
+						<!-- date -->
+							<script type="text/javascript">
+							   var mydate=new Date()
+							   var year=mydate.getYear()
+							   if(year<1000)
+								 year+=1900
+								 var day=mydate.getDay()
+								 var month=mydate.getMonth()
+								 var daym=mydate.getDate()
+							   if(daym<10)
+								 daym="0"+daym
+								 var dayarray=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday")
+								 var montharray=new Array("January","February","March","April","May","June","July","August","September","October","November","December")
+								 document.write(""+dayarray[day]+", "+montharray[month]+" "+daym+", "+year+"")
+							</script>
+						<!-- //date -->
+					</div>
+				</div>
+				<div class="clear"> </div>
+			</div>
+		<!-- MORE OF NOW WEATHER -->			
+			<div class="agileits_w3layouts_main_grid">
+				<div class="agile_main_grid_left">
+					<div class="wthree_main_grid_left_grid">
+						
+
+						<div class="w3ls_main_grid_left_grid1">
+							<div class="w3l_main_grid_left_grid1_left">
+								<h3>Feels like</h3>
+								<p>{{today_weather.feel}} °c</p>
+							</div>
+							<div class="w3l_main_grid_left_grid1_right">
+								<canvas id="partly-cloudy-day" width="45" height="45"></canvas>
+							</div>
+							<div class="clear"> </div>
+						</div>
+				
+						<div class="w3ls_main_grid_left_grid1">
+							<div class="w3l_main_grid_left_grid1_left">
+								<h3>Cloudiness</h3>
+								<p>{{today_weather.clouds}} <span>%</span></p>
+							</div>
+							<div class="w3l_main_grid_left_grid1_right">
+								<canvas id="cloudy" width="45" height="45"></canvas>
+							</div>
+							<div class="clear"> </div>
+						</div>
+						<div class="w3ls_main_grid_left_grid1">
+							<div class="w3l_main_grid_left_grid1_left">
+								<h3>Wind speed</h3>
+								<p>{{today_weather.wind}} <span>m/s</span></p>
+							</div>
+							<div class="w3l_main_grid_left_grid1_right">
+								<canvas id="wind" width="45" height="45"></canvas>
+							</div>
+							<div class="clear"> </div>
+						</div>
+					</div>
+				</div>
+				<div class="w3_agileits_main_grid_right">
+					<div class="agileinfo_main_grid_right_grid">
+						<div id="parentHorizontalTab">
+							<ul class="resp-tabs-list hor_1">
+								<li>Today</li>
+								<li>Week</li>
+							<!--<li>Month</li>-->
+							</ul>
+							<div class="resp-tabs-container hor_1">
+								<div class="w3_agileits_tabs">
+								
+			<!-- MORE OF TODAYS WEATHER HOURLY-->
+								{% for key, value in hourly_weather.items %}
+									<div class="w3_main_grid_right_grid1">
+										<div class="w3_main_grid_right_grid1_left">
+											<p>{{key}}</p>
+										</div>
+										<div class="w3_main_grid_right_grid1_right">
+											<p>{{value.temp}}<i>°c</i><span>{{value.summary}}</span></p>
+										</div>
+										<div class="clear"> </div>
+									</div>
+								{% endfor %}
+									
+									
+									
+									<!--
+									<div class="w3_main_grid_right_grid1">
+										<div class="w3_main_grid_right_grid1_left">
+											<p>11 AM</p>
+										</div>
+										<div class="w3_main_grid_right_grid1_right">
+											<p>16<i>°c</i><span>Clear</span></p>
+										</div>
+										<div class="clear"> </div>
+									</div>
+									<div class="w3_main_grid_right_grid1">
+										<div class="w3_main_grid_right_grid1_left">
+											<p>12 PM</p>
+										</div>
+										<div class="w3_main_grid_right_grid1_right">
+											<p>18<i>°c</i><span>Cear</span></p>
+										</div>
+										<div class="clear"> </div>
+									</div>
+									<div class="w3_main_grid_right_grid1">
+										<div class="w3_main_grid_right_grid1_left">
+											<p>2 PM</p>
+										</div>
+										<div class="w3_main_grid_right_grid1_right">
+											<p>12<i>°c</i><span>Partly Cloudy</span></p>
+										</div>
+										<div class="clear"> </div>
+									</div>
+									-->
+			<!-- MORE OF TODAYS WEATHER DAILY-->	
+								</div>
+								<div class="w3_agileits_tabs">
+								
+								{% for key, value in weekly_weather.items %}
+									<div class="w3_main_grid_right_grid1">
+										<div class="w3_main_grid_right_grid1_left">
+											<p>{{key}} </p>
+										</div>
+										<div class="w3_main_grid_right_grid1_right">
+											<p>{{value.temp}} <i>°c</i><span>{{value.summary}}</span></p>
+										</div>
+										<div class="clear"> </div>
+									</div>
+								{% endfor %}
+									
+									
+									<!--
+									<div class="w3_main_grid_right_grid1">
+										<div class="w3_main_grid_right_grid1_left">
+											<p>Tuesday</p>
+										</div>
+										<div class="w3_main_grid_right_grid1_right">
+											<p>16<i>°c</i><span>Cloudy</span></p>
+										</div>
+										<div class="clear"> </div>
+									</div>
+									<div class="w3_main_grid_right_grid1">
+										<div class="w3_main_grid_right_grid1_left">
+											<p>Wednesday</p>
+										</div>
+										<div class="w3_main_grid_right_grid1_right">
+											<p>11<i>°c</i><span>Rainy</span></p>
+										</div>
+										<div class="clear"> </div>
+									</div>
+									<div class="w3_main_grid_right_grid1">
+										<div class="w3_main_grid_right_grid1_left">
+											<p>Thursday</p>
+										</div>
+										<div class="w3_main_grid_right_grid1_right">
+											<p>18<i>°c</i><span>Sunny</span></p>
+										</div>
+										<div class="clear"> </div>
+									</div>
+									-->
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clear"> </div>
+			</div>
+		</div>
+<!--		<div class="agileits_copyright">
+			<p>© 2017 Aridity Weather Widget. All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+		</div>   -->
+	</div>
+	<!-- sky-icons -->
+		<script src=" {%static 'js/skycons.js'%}"></script>
+		<script>
+<!-- sky-icons for current main -->
+		 var icons = new Skycons({"color": "#999999"}),
+			  list  = [
+				"clear-day", "clear-night", "partly-cloudy-day",
+				"partly-cloudy-night", "cloudy", "rain", "snow", "wind",
+				"fog", "sleet"
+			  ],
+			  i;
+
+		  for(i = list.length; i--; )
+			icons.set(list[i], list[i]);
+
+		  icons.play();
+		</script>	
+		<script>
+<!-- sky-icons  for detailed -->
+			 var icons = new Skycons({"color": "#f5f5f5"}),
+				  list  = [
+				"clear-day", "clear-night", "partly-cloudy-day",
+				"partly-cloudy-night", "cloudy", "rain", "snow", "wind",
+				"fog", "sleet"
+				  ],
+				  i;
+
+			  for(i = list.length; i--; )
+				icons.set(list[i], list[i]);
+
+			  icons.play();
+		</script>
+		<!-- //sky-icons -->
+	<!-- tabs -->
+		<script src=" {%static 'js/easyResponsiveTabs.js'%}"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				//Horizontal Tab
+				$('#parentHorizontalTab').easyResponsiveTabs({
+					type: 'default', //Types: default, vertical, accordion
+					width: 'auto', //auto or any width like 600px
+					fit: true, // 100% fit in a container
+					tabidentify: 'hor_1', // The tab groups identifier
+					activate: function(event) { // Callback function if tab is switched
+						var $tab = $(this);
+						var $info = $('#nested-tabInfo');
+						var $name = $('span', $info);
+						$name.text($tab.text());
+						$info.show();
+					}
+				});
+			});
+		</script>
+	<!-- //tabs -->
+	<!-- time -->
+		<script>
+			function startTime() {
+				var today = new Date();
+				var h = today.getHours();
+				var m = today.getMinutes();
+				var s = today.getSeconds();
+				m = checkTime(m);
+				s = checkTime(s);
+				document.getElementById('w3time').innerHTML =
+				h + ":" + m + ":" + s;
+				var t = setTimeout(startTime, 500);
+			}
+			function checkTime(i) {
+				if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+				return i;
+			}
+		</script>
+	<!-- //time -->
+
+		
+
+        <nav class="navbar is-dark">
+			<div class="navbar-brand">
+				<p> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MY NOTEBOOK </p>
+			</div>
+        </nav> 
+    
+    
+    
+	
+
+        <section class="section">
+        <!--   to make space in top and side of screen -->
+            <div class="columns">
+				<!-- test to see column placements before remaining menu etc added
+                <div class="column is-2">Left </div>
+                <div class="column is-10">Right </div>  -->
+                <div class="column is-2">
+                    <aside class="menu">
+                    
+                   
+                <p class="menu-label">
+                    <a href="{% url 'homepage' %}?noteid=0" class="navbar-item">* New Note *</a>
+					<!-- open with noteid=0 so that it is a new note --> 
+                </p>
+                    
+                    <p class="menu-label">--------------------</p>
+                        <p class="menu-label">Saved  Notes</p>
+
+                        <ul class="menu-list">
+                            {% for page in book.notes %}
+                                <li>
+                                    <a href="{% url 'homepage' %}?noteid={{ page.id }}">{{ page.name }}</a>
+                                </li>
+                            {% endfor %}
+						
+						</ul>
+					</aside>
+				</div>
+							
+							
+				<div class="column is-10">
+                    <form method="post" action="{% url 'homepage' %}">
+                        {% csrf_token %}
+						
+                        <input type="hidden" name="noteid" value="{{ book.noteid }}"> <!-- hide the noteid from page -->
+				
+                        <div class="field">   <!--   Class for Note names -->
+                            <label class="label">Name</label>
+							
+                            <div class="control">
+                                <input type="text" class="input" name="name" placeholder="Note Name"{% if book.notepage %} value="{{ book.notepage.name }}"{% endif %}>
+                            </div>
+						</div>
+
+
+                        <div class="field">   <!--   Class for Note content -->
+                            <label class="label">Content</label>
+
+                            <div class="control">
+                                <textarea class="textarea" name="content" placeholder="Note Datas">{% if book.notepage %}{{ book.notepage.datas }}{% endif %}</textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-primary">Save</button>
+                            </div>
+
+                            {% if book.notepage %}
+                                <div class="control">
+                                    <a href="{% url 'd_note' book.notepage.id %}" class="button is-danger">Delete</a>
+                                </div>
+                            {% endif %}
+
+						
+                            {% if book.notepage %}
+								
+                                <span class="has-text-grey-light">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                    Created at: {{ book.notepage.created|date:"Y M d H:m:s e" }} &nbsp;&nbsp;&nbsp;  /  &nbsp;&nbsp;&nbsp; 
+                                    Modified at: {{ book.notepage.modified|date:"Y M d H:m:s e" }}
+                                </span>
+								
+                            {% endif %}
+						
+
+
+
+
+				
+				</div>			
+			</div>
+		</section>
+		
+            
+        <nav class="navbar is-dark">
+            <div class="navbar-brand">
+                <a href="{% url 'notepad' %}" class="navbar-item">Notes</a>  
+				<!-- takes name from url file -->
+            </div>
+			<div class="navbar-menu">
+                <div class="navbar-end">
+                    <a href="{% url 'whome' %}" class="navbar-item">Weather</a>
+					<!-- open with noteid=0 so that it is a new note --> 
+                </div>
+            </div>
+            
+        </nav>
+	
+        
+        
+	</body>
+	
+</html>
